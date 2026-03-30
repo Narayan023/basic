@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            text-align: center;
+            padding: 150px;
+            margin-bottom: 100px;
+            height: 10px;
+            background: none;
+        }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+        input{
+            width: 50%;
+            height: 10%;
+            padding:10px;
+            margin: 10px 0;
+          
+
+        }
+        .box{
+            width: 300px;
+      padding: 40px;
+      background: rgba(144, 132, 132, 0.6);
+      color: white;
+      margin: 100px auto;
+      border-radius: 10px;
+      text-align: center;
+
+
+        }
+        button{
+            width:10px;
+            padding: 10px;
+            background-color: aqua;
+            cursor: pointer;
+            color: white;
+        }
+        .Signin-btn{
+            display:inline-block;
+            padding: 10px;
+            background-color:rgb(147, 188, 194);
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas class="background" id="bg3d"></canvas>
+    <form action="47.html">
+        <div class="box">
+            <label for="User Name">Enter Your User Name: </label>
+            <input id="User Name" placeholder="Enter Your User Name" name="user id" required>
+            <br>
+            <label for="password" >Enter Your Password: </label>
+            <input id="password" placeholder="Enter Your password" name="user password" required>
+            <br>
+            <input type="submit" value="Login" >
+            <a href="signup.html" class="Signin-btn">Sign In</a>
+        </div>
+    </form>
+</body>
+</body>
+<script>
+// Slow-motion city sunrise animation
+const canvas = document.getElementById('bg3d');
+const ctx = canvas.getContext('2d');
+let w = window.innerWidth;
+let h = window.innerHeight;
+canvas.width = w;
+canvas.height = h;
+
+// City buildings
+const buildings = [];
+const buildingColors = ['#222c3c', '#2e3d54', '#3a4d6c', '#4a5d7c'];
+const numBuildings = 18;
+for (let i = 0; i < numBuildings; i++) {
+    let bw = 60 + Math.random() * 40;
+    let bh = 120 + Math.random() * (h * 0.4);
+    let bx = (w / numBuildings) * i + Math.random() * 10;
+    let by = h - bh;
+    let color = buildingColors[Math.floor(Math.random() * buildingColors.length)];
+    buildings.push({ x: bx, y: by, w: bw, h: bh, color });
+}
+
+// Sun
+let sunY = h * 0.85;
+let sunRadius = 80;
+let sunriseSpeed = 0.08; // slow motion
+
+function drawSun() {
+    let gradient = ctx.createRadialGradient(w/2, sunY, 10, w/2, sunY, sunRadius);
+    gradient.addColorStop(0, '#fffbe6');
+    gradient.addColorStop(0.5, '#ffe066');
+    gradient.addColorStop(1, 'rgba(255, 200, 0, 0)');
+    ctx.beginPath();
+    ctx.arc(w/2, sunY, sunRadius, 0, 2 * Math.PI);
+    ctx.fillStyle = gradient;
+    ctx.fill();
+}
+
+function drawSky() {
+    let skyGradient = ctx.createLinearGradient(0, 0, 0, h);
+    skyGradient.addColorStop(0, '#0b1e3d');
+    skyGradient.addColorStop(0.5, '#3a6ea5');
+    skyGradient.addColorStop(1, '#ffe066');
+    ctx.fillStyle = skyGradient;
+    ctx.fillRect(0, 0, w, h);
+}
+
+function drawBuildings() {
+    for (let b of buildings) {
+        ctx.fillStyle = b.color;
+        ctx.fillRect(b.x, b.y, b.w, b.h);
+        // No window lights
+    }
+}
+
+function animate() {
+    drawSky();
+    drawSun();
+    drawBuildings();
+    // Animate sun rising
+    if (sunY > h * 0.35) {
+        sunY -= sunriseSpeed;
+    }
+    requestAnimationFrame(animate);
+}
+animate();
+
+window.addEventListener('resize', () => {
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = w;
+    canvas.height = h;
+});
+</script>
+</html>
+</html>
+
+
